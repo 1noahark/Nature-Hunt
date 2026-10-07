@@ -16,7 +16,7 @@ function LocationSelector({ onSearch }) {
 
   return (
     <div className="select-location-div">
-      <h3>Select your location</h3>
+      <h3>Enter your location</h3>
 
       <div className="inputcontainer">
         <input
