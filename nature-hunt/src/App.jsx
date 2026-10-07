@@ -7,6 +7,7 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("birds");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   // This runs when the user enters a location
   // and presses Enter or clicks the search button.
@@ -34,7 +35,7 @@ function App() {
       });
 
       const response = await fetch(
-        `http://localhost:5000/api/images?${params.toString()}`
+        `${API_URL}/api/images?${params.toString()}`
       );
 
       if (!response.ok) {
