@@ -1,12 +1,14 @@
 import { useState } from "react";
 import "./App.css";
 import LocationSelector from "./Components/LocationSelector";
+import { RiGeminiFill } from "react-icons/ri";
 
 function App() {
   const [location, setLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("birds");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [explain, setexplain] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
 
   // This runs when the user enters a location
@@ -113,7 +115,7 @@ function App() {
               />
 
               <div className="card-content">
-                <h3>{result.title}</h3>
+                <button onClick={() => {explain ? (<div><h1>Hey</h1></div>) : setexplain(!explain); console.log(explain);}}><RiGeminiFill className="geminilogo"/> Explain</button>
               </div>
             </div>
           ))}
