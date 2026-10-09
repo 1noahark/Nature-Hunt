@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import LocationSelector from "./Components/LocationSelector";
+import Explanation from "./Components/Explanation";
 import { RiGeminiFill } from "react-icons/ri";
 
 function App() {
@@ -8,7 +9,6 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState("birds");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [explain, setexplain] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
 
   // This runs when the user enters a location
@@ -19,6 +19,15 @@ function App() {
 
     await searchNature("birds", newLocation);
   };
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedTitle, setSelectedTitle] = useState("");
+
+  const handleExplain = (result) => {
+    setSelectedTitle(result.title);
+    setShowPopup(true);
+  };
+
 
   // Search for nature
   const searchNature = async (category, searchLocation = location) => {
@@ -106,20 +115,30 @@ function App() {
       )}
 
       <div className="Result-Container">
-        {!loading &&
-          results.map((result, index) => (
-            <div className="Card" key={index}>
-              <img
-                src={result.thumbnail}
-                alt={result.title || selectedCategory}
-              />
+      {!loading &&
+        results.map((result, index) => (
+          <div className="Card" key={index}>
+            <img
+              src={result.thumbnail}
+              alt={result.title || selectedCategory}
+            />
 
-              <div className="card-content">
-                <button onClick={() => {explain ? (<div><h1>Hey</h1></div>) : setexplain(!explain); console.log(explain);}}><RiGeminiFill className="geminilogo"/> Explain</button>
-              </div>
+            <div className="card-content">
+              <button onClick={() => handleExplain(result)}>
+                <RiGeminiFill className="geminilogo" />
+                Explain
+              </button>
             </div>
-          ))}
-      </div>
+          </div>
+        ))}
+
+      {showPopup && (
+        <Explanation
+          title={selectedTitle}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
+    </div>
     </div>
   );
 }
